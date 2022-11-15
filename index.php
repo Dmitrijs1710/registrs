@@ -12,7 +12,7 @@ $csv = Reader::createFromPath("register.csv");
 $csv->setDelimiter(';');
 $csv->setHeaderOffset(0);
 
-//setting all data into FirmCollection
+//parsing all data into FirmCollection object
 $firms = new FirmCollection();
 
 foreach ($csv->getRecords() as $record)
