@@ -12,6 +12,7 @@ $csv = Reader::createFromPath("register.csv");
 $csv->setDelimiter(';');
 $csv->setHeaderOffset(0);
 
+//setting all data into FirmCollection
 $firms = new FirmCollection();
 
 foreach ($csv->getRecords() as $record)
@@ -22,7 +23,10 @@ foreach ($csv->getRecords() as $record)
     unset($record['regcode']);
     $firms->add(new Firm($regCode, $name, $record));
 }
+
+//user interface
 while(true){
+    //selection of search type
     echo "Choice: \n";
     echo "0 to exit\n";
     echo "1 to search by name\n";
@@ -36,6 +40,7 @@ while(true){
     }
     echo PHP_EOL;
     $result = [];
+    //user options input for search and function calls
     switch($input)
     {
         case 1:
@@ -75,6 +80,7 @@ while(true){
             break;
     }
     echo PHP_EOL;
+    //result output
     if(gettype($result) === 'array')
     {
         if(count($result) === 0)
