@@ -45,9 +45,9 @@ class FirmCollection
         }
         return null;
     }
-    public function getByOffset(int $start,int $limit) :array
+    public function getByOffset(int $start,int $limit = 0) :array
     {
-        if(count($this->firms) > $start+$limit)
+        if(count($this->firms) <= $start+$limit)
         {
             $limit = count($this->firms) - 1 - $start;
         }
