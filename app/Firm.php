@@ -1,17 +1,19 @@
 <?php
+
 namespace App;
 
-class Firm{
+class Firm
+{
     private string $registrationCode;
     private string $name;
     private array $data;
 
     public function __toString()
     {
-        return $this->getRegistrationCode() . ' | ' . $this->getName() . ' | ' . implode(' | ',$this->data);
+        return $this->getRegistrationCode() . ' | ' . $this->getName() . ' | ' . implode(' | ', $this->getData());
     }
 
-    public function __construct(string $registrationCode, string $name,array $data)
+    public function __construct(string $registrationCode, string $name, array $data)
     {
         $this->registrationCode = $registrationCode;
         $this->name = $name;
@@ -26,5 +28,10 @@ class Firm{
     public function getRegistrationCode(): string
     {
         return $this->registrationCode;
+    }
+
+    public function getData(): array
+    {
+        return $this->data;
     }
 }

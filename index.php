@@ -33,8 +33,9 @@ while(true){
     echo "2 to search by registration code\n";
     echo "3 to search by offset\n";
     echo "4 to get count of registrations\n";
+    echo "5 to get last 30\n";
     $input = (int)readline('Your choice: ');
-    if ($input<=0 || $input>4)
+    if ($input<=0 || $input>5)
     {
         die;
     }
@@ -78,6 +79,10 @@ while(true){
         case 4:
             $result = $firms->getCountOfFirms();
             break;
+        case 5:
+            $result = $firms->getByOffset($firms->getCountOfFirms()-31,30);
+            break;
+
     }
     echo PHP_EOL;
     //result output
@@ -100,9 +105,3 @@ while(true){
     }
     echo PHP_EOL;
 }
-
-
-
-
-
-

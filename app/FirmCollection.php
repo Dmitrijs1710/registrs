@@ -5,9 +5,10 @@ namespace App;
 class FirmCollection
 {
     private array $firms;
-    public function __construct(array $firms=[])
+
+    public function __construct(array $firms = [])
     {
-        foreach ($firms as $firm){
+        foreach ($firms as $firm) {
             $this->add($firm);
         }
     }
@@ -17,52 +18,61 @@ class FirmCollection
         return $this->firms;
     }
 
-    public function add(Firm $firm) :void
+    public function add(Firm $firm): void
     {
-        $this->firms[]=$firm;
+        $this->firms[] = $firm;
     }
 
-    public function searchByRegistrationCode(string $registrationCode) :?Firm
+    public function searchByRegistrationCode(string $registrationCode): ?Firm
     {
-        foreach ($this->firms as $firm)
-        {
-           /** @var Firm $firm */
-           if($firm->getRegistrationCode() === $registrationCode){
-               return($firm);
-           }
-        }
-        return null;
-    }
-
-    public function searchByName(string $name) :?Firm
-    {
-        foreach ($this->firms as $firm){
+        foreach ($this->firms as $firm) {
             /** @var Firm $firm */
-            if($firm->getName() === $name)
-            {
-                return($firm);
+            if ($firm->getRegistrationCode() === $registrationCode) {
+                return ($firm);
             }
         }
         return null;
     }
-    public function getByOffset(int $start,int $limit = 0) :array
+
+    public function searchByName(string $name): array
     {
-        if(count($this->firms) <= $start+$limit)
-        {
-            $limit = count($this->firms) - 1 - $start;
-        }
-        if(0 > $start)
-        {
-            return [];
-        }
-        $result = [];
-        for($i = $start; $i < $start + $limit; $i++)
-        {
-            $result[] = $this->firms[$i];
+        $result=[];
+        foreach ($this->firms as $firm) {
+            /** @var Firm $firm */
+            if (strpos($firm->getName(),$name)) {
+                $result[] = $firm;
+            }
         }
         return $result;
     }
-    public function getCountOfFirms() :int
+
+    public function getByOffset(int $start, int $limit = 0,bool $preserve_index=true): array
+    {
+        if (count($this->firms) <= $start + $limit) {
+            $limit = count($this->firms) - 1 - $start;
+        }
+        if (0 > $start) {
+            return [];
+        }
+        $result = [];
+        if($preserve_index)
+        {
+            for ($i = $start; $i < $start + $limit; $i++)
+            {
+                $result[$i] = $this->firms[$i];
+            }
+        } else
+        {
+            for ($i = $start; $i < $start + $limit; $i++)
+            {
+                $result[] = $this->firms[$i];
+            }
+        }
+
+        return $result;
+    }
+
+    public function getCountOfFirms(): int
     {
         return count($this->firms);
     }
